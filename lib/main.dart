@@ -41,8 +41,8 @@ class CryptoPro extends StatelessWidget {
         ),
       ),
       routes: {
-        '/' : (context) => const MainPage(),
-        '/coin' : (context) => const CryptoCoinScreen(),
+        '/': (context) => const MainPage(),
+        '/coin': (context) => const CryptoCoinScreen(),
       },
     );
   }
@@ -71,32 +71,63 @@ class _MainPageState extends State<MainPage> {
       body: ListView.separated(
         separatorBuilder: (context, i) => const Divider(),
         itemCount: 10,
-        itemBuilder: (context, i) => ListTile(
-          leading: SvgPicture.asset(
-            'assets/svg/bitcoin_logo.svg',
-            height: 32,
-            width: 32,
-          ),
-          title: Text(
-            'Bitcoin',
-            style: theme.textTheme.bodyMedium,
-          ),
-          subtitle: Text(
-            '150000\$',
-            style: theme.textTheme.bodySmall,
-          ),
-          trailing: const Icon(Icons.arrow_forward_ios),
-          onTap: () {
-            Navigator.of(context).pushNamed('/coin');
-          },
-        ),
+        itemBuilder: (context, i) {
+          const coinName = 'Bitcoin';
+          return ListTile(
+            leading: SvgPicture.asset(
+              'assets/svg/bitcoin_logo.svg',
+              height: 32,
+              width: 32,
+            ),
+            title: Text(
+              coinName,
+              style: theme.textTheme.bodyMedium,
+            ),
+            subtitle: Text(
+              '150000\$',
+              style: theme.textTheme.bodySmall,
+            ),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                '/coin',
+                arguments: coinName,
+              );
+            },
+          );
+        },
       ),
     );
   }
 }
 
-class CryptoCoinScreen extends StatelessWidget {
+class CryptoCoinScreen extends StatefulWidget {
   const CryptoCoinScreen({super.key});
+
+  @override
+  State<CryptoCoinScreen> createState() => _CryptoCoinScreenState();
+}
+
+class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
+  String? coinName;
+
+  @override
+  void didChangeDependencies() {
+    final arg = ModalRoute.of(context)?.settings.arguments;
+    assert(arg != null && arg is String, 'Необходимо передать данные типа String');
+    // if (arg == null) {
+    //   log('Необходимо передать данные');
+    //   return;
+    // }
+    // if (arg is! String) {
+    //   log('Необходимо передать данные типа String');
+    //   return;
+    // }
+    coinName = arg as String;
+
+    setState(() {});
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +136,7 @@ class CryptoCoinScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Bitcoin',
+          coinName ?? '...',
           style: theme.textTheme.bodyMedium,
         ),
       ),
