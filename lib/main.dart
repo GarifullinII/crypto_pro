@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'features/crypto_list/crypto_list.dart';
 
 void main() {
   runApp(const CryptoPro());
@@ -41,62 +41,9 @@ class CryptoPro extends StatelessWidget {
         ),
       ),
       routes: {
-        '/': (context) => const MainPage(),
+        '/': (context) => const CryptoListScreen(),
         '/coin': (context) => const CryptoCoinScreen(),
       },
-    );
-  }
-}
-
-class MainPage extends StatefulWidget {
-  const MainPage({super.key});
-
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'CryptoPro',
-          style: theme.textTheme.bodyMedium,
-        ),
-      ),
-      body: ListView.separated(
-        separatorBuilder: (context, i) => const Divider(),
-        itemCount: 10,
-        itemBuilder: (context, i) {
-          const coinName = 'Bitcoin';
-          return ListTile(
-            leading: SvgPicture.asset(
-              'assets/svg/bitcoin_logo.svg',
-              height: 32,
-              width: 32,
-            ),
-            title: Text(
-              coinName,
-              style: theme.textTheme.bodyMedium,
-            ),
-            subtitle: Text(
-              '150000\$',
-              style: theme.textTheme.bodySmall,
-            ),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () {
-              Navigator.of(context).pushNamed(
-                '/coin',
-                arguments: coinName,
-              );
-            },
-          );
-        },
-      ),
     );
   }
 }
