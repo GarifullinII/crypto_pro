@@ -14,14 +14,6 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
   void didChangeDependencies() {
     final arg = ModalRoute.of(context)?.settings.arguments;
     assert(arg != null && arg is String, 'Необходимо передать данные типа String');
-    // if (arg == null) {
-    //   log('Необходимо передать данные');
-    //   return;
-    // }
-    // if (arg is! String) {
-    //   log('Необходимо передать данные типа String');
-    //   return;
-    // }
     coinName = arg as String;
 
     setState(() {});

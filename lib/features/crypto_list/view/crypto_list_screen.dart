@@ -1,3 +1,5 @@
+import 'package:crypto_pro/repositories/crypto_coins/crypto_coins_repository.dart';
+import 'package:crypto_pro/repositories/crypto_coins/models/crypto_coin.dart';
 import 'package:flutter/material.dart';
 import '../widgets/widgets.dart';
 
@@ -9,10 +11,17 @@ class CryptoListScreen extends StatefulWidget {
 }
 
 class _CryptoListScreenState extends State<CryptoListScreen> {
+  List<CryptoCoin>? _cryptoCoinList;
+
+  @override
+  void initState() {
+    _loadCryptoCoins();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -21,14 +30,20 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
           style: theme.textTheme.bodyMedium,
         ),
       ),
-      body: ListView.separated(
+      body: (_cryptoCoinList == null) ? const Center(child: CircularProgressIndicator()) :
+      ListView.separated(
         separatorBuilder: (context, i) => const Divider(),
-        itemCount: 10,
+        itemCount: _cryptoCoinList!.length,
         itemBuilder: (context, i) {
-          const coinName = 'Bitcoin';
-          return const CryptoCoinTile(coinName: coinName);
+          final coin = _cryptoCoinList![i];
+          return CryptoCoinTile(coin: coin);
         },
       ),
     );
+  }
+
+  Future<void> _loadCryptoCoins() async {
+    _cryptoCoinList = await CryptoCoinsRepository().getCoinsList();
+    setState(() {});
   }
 }
