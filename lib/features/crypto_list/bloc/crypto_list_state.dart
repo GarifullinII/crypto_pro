@@ -5,10 +5,16 @@ abstract class CryptoListState {}
 
 class CryptoListInitialState extends CryptoListState {}
 
-class CryptoListLoading extends CryptoListState{}
+class CryptoListLoadingState extends CryptoListState{}
 
 class CryptoListLoadedState extends CryptoListState {
   final List<CryptoCoin> coinsList;
 
   CryptoListLoadedState({required this.coinsList});
+}
+
+class CryptoListLoadingFailureState extends CryptoListState {
+  final Object? exception;
+
+  CryptoListLoadingFailureState({required this.exception});
 }

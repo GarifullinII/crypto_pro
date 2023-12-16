@@ -45,6 +45,13 @@ class _CryptoListScreenState extends State<CryptoListScreen> {
               },
             );
           }
+          if (state is CryptoListLoadingFailureState) {
+            return Center(
+              child: Text(
+                state.exception?.toString() ?? 'Exeption',
+              ),
+            );
+          }
           return const Center(
             child: CircularProgressIndicator(),
           );
