@@ -1,4 +1,4 @@
-import 'models/crypto_coin.dart';
+import 'crypto_coins.dart';
 
 abstract class AbstractCoinsRepository {
   Future<List<CryptoCoin>> getCoinsList();
