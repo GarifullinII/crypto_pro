@@ -1,20 +1,32 @@
 part of 'crypto_list_bloc.dart';
 
 @immutable
-abstract class CryptoListState {}
+abstract class CryptoListState extends Equatable {}
 
-class CryptoListInitialState extends CryptoListState {}
+class CryptoListInitialState extends CryptoListState {
+  @override
+  List<Object?> get props => [];
+}
 
-class CryptoListLoadingState extends CryptoListState{}
+class CryptoListLoadingState extends CryptoListState{
+  @override
+  List<Object?> get props => [];
+}
 
 class CryptoListLoadedState extends CryptoListState {
   final List<CryptoCoin> coinsList;
 
   CryptoListLoadedState({required this.coinsList});
+
+  @override
+  List<Object?> get props => [coinsList];
 }
 
 class CryptoListLoadingFailureState extends CryptoListState {
   final Object? exception;
 
   CryptoListLoadingFailureState({required this.exception});
+
+  @override
+  List<Object?> get props => [exception];
 }
