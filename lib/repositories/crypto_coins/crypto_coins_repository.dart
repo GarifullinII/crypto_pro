@@ -39,13 +39,19 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
     final dataRaw = data['RAW'] as Map<String, dynamic>;
     final coinData = dataRaw[coinName] as Map<String, dynamic>;
     final usdData = coinData['USD'] as Map<String, dynamic>;
+    final price = usdData['PRICE'];
+    final imageUrl = usdData['IMAGEURL'];
+    final high24Hour = usdData['HIGH24HOUR'];
+    final low24Hour = usdData['LOW24HOUR'];
 
     debugPrint(usdData.toString());
 
     return CoinDetail(
       coinName: coinName,
-      high24Hour: usdData['HIGH24HOUR'],
-      low24Hour: usdData['LOW24HOUR'],
+      priceInUSD: price,
+      imageUrl: imageUrl,
+      high24Hour: high24Hour,
+      low24Hour: low24Hour,
     );
   }
 }
