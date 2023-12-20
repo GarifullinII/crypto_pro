@@ -24,14 +24,14 @@ class CryptoCoinTile extends StatelessWidget {
         style: theme.textTheme.bodyMedium,
       ),
       subtitle: Text(
-        '${coin.priceInUSD} \$',
+        '${(coin.priceInUSD*10000).round()/10000} \$',
         style: theme.textTheme.bodySmall,
       ),
       trailing: const Icon(Icons.arrow_forward_ios),
       onTap: () {
         Navigator.of(context).pushNamed(
           '/coin',
-          arguments: coin.name,
+          arguments: coin,
         );
       },
     );

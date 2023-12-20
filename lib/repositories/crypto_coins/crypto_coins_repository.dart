@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'crypto_coins.dart';
 
 class CryptoCoinsRepository implements AbstractCoinsRepository {
-
   final Dio dio;
 
   CryptoCoinsRepository({required this.dio});
@@ -10,7 +10,8 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
   @override
   Future<List<CryptoCoin>> getCoinsList() async {
     final response = await dio.get(
-        'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,SOL,DOV,BNB,BTCRED,BTO,CAG,AIT,AVAX&tsyms=USD');
+      'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,SOL,DOV,BNB,BTCRED,BTO,CAG,AIT,AVAX&tsyms=USD',
+    );
     final data = response.data as Map<String, dynamic>;
     final dataRaw = data['RAW'] as Map<String, dynamic>;
     final cryptoCoinsList = dataRaw.entries.map((e) {
@@ -27,5 +28,24 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
     }).toList();
 
     return cryptoCoinsList;
+  }
+
+  @override
+  Future<CoinDetail> getCoinDetails(String coinName) async {
+    final response = await dio.get(
+      'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=$coinName&tsyms=USD',
+    );
+    final data = response.data as Map<String, dynamic>;
+    final dataRaw = data['RAW'] as Map<String, dynamic>;
+    final coinData = dataRaw[coinName] as Map<String, dynamic>;
+    final usdData = coinData['USD'] as Map<String, dynamic>;
+
+    debugPrint(usdData.toString());
+
+    return CoinDetail(
+      coinName: coinName,
+      high24Hour: usdData['HIGH24HOUR'],
+      low24Hour: usdData['LOW24HOUR'],
+    );
   }
 }
