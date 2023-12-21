@@ -1,14 +1,14 @@
 import 'package:equatable/equatable.dart';
 
-class CoinDetail extends Equatable {
-  final String coinName;
+class CryptoCoinDetail extends Equatable {
+  final String name;
   final double priceInUSD;
   final String imageUrl;
   final double high24Hour;
   final double low24Hour;
 
-  const CoinDetail({
-    required this.coinName,
+  const CryptoCoinDetail({
+    required this.name,
     required this.priceInUSD,
     required this.imageUrl,
     required this.high24Hour,
@@ -16,5 +16,11 @@ class CoinDetail extends Equatable {
   });
 
   @override
-  List<Object> get props => [high24Hour, low24Hour];
+  List<Object> get props => [
+        name,
+        priceInUSD,
+        imageUrl,
+        high24Hour,
+        low24Hour,
+      ];
 }

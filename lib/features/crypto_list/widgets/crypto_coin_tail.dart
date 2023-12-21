@@ -1,3 +1,4 @@
+import 'package:crypto_pro/repositories/crypto_coins/crypto_coins.dart';
 import 'package:crypto_pro/repositories/crypto_coins/models/crypto_coin.dart';
 import 'package:flutter/material.dart';
 

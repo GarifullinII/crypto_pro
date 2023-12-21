@@ -8,7 +8,7 @@ class CryptoListInitialState extends CryptoListState {
   List<Object?> get props => [];
 }
 
-class CryptoListLoadingState extends CryptoListState{
+class CryptoListLoadingState extends CryptoListState {
   @override
   List<Object?> get props => [];
 }
