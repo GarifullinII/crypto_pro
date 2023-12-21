@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:crypto_pro/repositories/crypto_coins/crypto_coins.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import '../../../repositories/crypto_coins/abstract_coins_repository.dart';
 

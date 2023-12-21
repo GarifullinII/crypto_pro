@@ -40,6 +40,7 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
     final usdData = coinData['USD'] as Map<String, dynamic>;
     final price = usdData['PRICE'];
     final imageUrl = usdData['IMAGEURL'];
+    final lastUpdate = usdData['LASTUPDATE'];
     final high24Hour = usdData['HIGH24HOUR'];
     final low24Hour = usdData['LOW24HOUR'];
 
@@ -47,6 +48,7 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
       name: currencyCode,
       priceInUSD: price,
       imageUrl: 'https://www.cryptocompare.com/$imageUrl',
+      lastUpdate: DateTime.fromMillisecondsSinceEpoch(lastUpdate),
       high24Hour: high24Hour,
       low24Hour: low24Hour,
     );

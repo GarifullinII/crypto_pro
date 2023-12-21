@@ -81,8 +81,8 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                         padding: const EdgeInsets.only(left: 12),
                         child: Column(
                           children: [
-                            Text('${coinDetails.high24Hour} \$'),
-                            Text('${coinDetails.low24Hour} \$'),
+                            Text('${((coinDetails.high24Hour * 10000).round() / 10000).toString()} \$'),
+                            Text('${((coinDetails.low24Hour * 10000).round() / 10000).toString()} \$'),
                           ],
                         ),
                       ),
