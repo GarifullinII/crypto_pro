@@ -54,9 +54,9 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.network(
-                    coinDetails.name,
-                    height: 32,
-                    width: 32,
+                    coinDetails.imageUrl,
+                    height: 86,
+                    width: 86,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 16, bottom: 16),
