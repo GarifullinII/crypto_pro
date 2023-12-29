@@ -16,13 +16,15 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
     final cryptoCoinsList = dataRaw.entries.map((e) {
       final usdData =
           (e.value as Map<String, dynamic>)['USD'] as Map<String, dynamic>;
-      final price = usdData['PRICE'];
-      final imageUrl = usdData['IMAGEURL'];
+      final detail = CryptoCoinDetail.fromJson(usdData);
+      // final price = usdData['PRICE'];
+      // final imageUrl = usdData['IMAGEURL'];
 
       return CryptoCoin(
         name: e.key,
-        priceInUSD: price,
-        imageUrl: 'https://www.cryptocompare.com/$imageUrl',
+        detail: detail,
+        // priceInUSD: price,
+        // imageUrl: 'https://www.cryptocompare.com/$imageUrl',
       );
     }).toList();
 
@@ -30,7 +32,7 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
   }
 
   @override
-  Future<CryptoCoinDetail> getCoinDetails(String currencyCode) async {
+  Future<CryptoCoin> getCoinDetails(String currencyCode) async {
     final response = await dio.get(
       'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=$currencyCode&tsyms=USD',
     );
@@ -38,19 +40,21 @@ class CryptoCoinsRepository implements AbstractCoinsRepository {
     final dataRaw = data['RAW'] as Map<String, dynamic>;
     final coinData = dataRaw[currencyCode] as Map<String, dynamic>;
     final usdData = coinData['USD'] as Map<String, dynamic>;
-    final price = usdData['PRICE'];
-    final imageUrl = usdData['IMAGEURL'];
-    final lastUpdate = usdData['LASTUPDATE'];
-    final high24Hour = usdData['HIGH24HOUR'];
-    final low24Hour = usdData['LOW24HOUR'];
+    final detail = CryptoCoinDetail.fromJson(usdData);
+    // final price = usdData['PRICE'];
+    // final imageUrl = usdData['IMAGEURL'];
+    // final lastUpdate = usdData['LASTUPDATE'];
+    // final high24Hour = usdData['HIGH24HOUR'];
+    // final low24Hour = usdData['LOW24HOUR'];
 
-    return CryptoCoinDetail(
+    return CryptoCoin(
       name: currencyCode,
-      priceInUSD: price,
-      imageUrl: 'https://www.cryptocompare.com/$imageUrl',
-      lastUpdate: DateTime.fromMillisecondsSinceEpoch(lastUpdate),
-      high24Hour: high24Hour,
-      low24Hour: low24Hour,
+      detail: detail,
+      // priceInUSD: price,
+      // imageUrl: 'https://www.cryptocompare.com/$imageUrl',
+      // lastUpdate: DateTime.fromMillisecondsSinceEpoch(lastUpdate),
+      // high24Hour: high24Hour,
+      // low24Hour: low24Hour,
     );
   }
 }

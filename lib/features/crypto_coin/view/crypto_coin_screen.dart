@@ -49,18 +49,19 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
           bloc: _cryptoCoinDetailsBloc,
           builder: (context, state) {
             if (state is CryptoCoinDetailsLoadedState) {
-              final coinDetails = state.coinDetails;
+              final coin = state.coin;
+              final coinDetails = coin.detail;
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.network(
-                    coinDetails.imageUrl,
+                    coinDetails.fullImageUrl,
                     height: 86,
                     width: 86,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 16, bottom: 16),
-                    child: Text(coinDetails.name),
+                    child: Text(coin.name),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 32),
