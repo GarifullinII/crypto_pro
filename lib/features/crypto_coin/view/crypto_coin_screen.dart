@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:crypto_pro/features/crypto_coin/bloc/crypto_coin_details_bloc.dart';
 import 'package:crypto_pro/repositories/crypto_coins/crypto_coins.dart';
 import 'package:flutter/material.dart';
@@ -5,9 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import '../../../repositories/crypto_coins/models/crypto_coin.dart';
 
+@RoutePage()
 class CryptoCoinScreen extends StatefulWidget {
+  final CryptoCoin coin;
+
   const CryptoCoinScreen({
     super.key,
+    required this.coin,
   });
 
   @override
@@ -15,24 +20,30 @@ class CryptoCoinScreen extends StatefulWidget {
 }
 
 class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
-  CryptoCoin? coin;
+  // CryptoCoin? coin;
 
   final _cryptoCoinDetailsBloc = CryptoCoinDetailsBloc(
     GetIt.I<AbstractCoinsRepository>(),
   );
 
   @override
-  void didChangeDependencies() {
-    final arg = ModalRoute.of(context)?.settings.arguments;
-    assert(
-      arg != null && arg is CryptoCoin,
-      'Необходимо передать данные типа String',
-    );
-    coin = arg as CryptoCoin;
-    _cryptoCoinDetailsBloc
-        .add(LoadCryptoCoinDetailsEvent(currencyCode: coin!.name));
-    super.didChangeDependencies();
+  void initState() {
+    _cryptoCoinDetailsBloc.add(LoadCryptoCoinDetailsEvent(currencyCode: widget.coin.name));
+    super.initState();
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   final arg = ModalRoute.of(context)?.settings.arguments;
+  //   assert(
+  //     arg != null && arg is CryptoCoin,
+  //     'Необходимо передать данные типа String',
+  //   );
+  //   coin = arg as CryptoCoin;
+  //   _cryptoCoinDetailsBloc
+  //       .add(LoadCryptoCoinDetailsEvent(currencyCode: coin!.name));
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +52,7 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          coin!.name,
+          widget.coin.name,
           style: theme.textTheme.bodyMedium,
         ),
       ),
@@ -82,8 +93,10 @@ class _CryptoCoinScreenState extends State<CryptoCoinScreen> {
                         padding: const EdgeInsets.only(left: 12),
                         child: Column(
                           children: [
-                            Text('${((coinDetails.high24Hour * 10000).round() / 10000).toString()} \$'),
-                            Text('${((coinDetails.low24Hour * 10000).round() / 10000).toString()} \$'),
+                            Text(
+                                '${((coinDetails.high24Hour * 10000).round() / 10000).toString()} \$'),
+                            Text(
+                                '${((coinDetails.low24Hour * 10000).round() / 10000).toString()} \$'),
                           ],
                         ),
                       ),
